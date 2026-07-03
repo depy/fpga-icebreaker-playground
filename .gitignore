@@ -1,0 +1,35 @@
+# Yosys synthesis
+*.json
+*.blif
+
+# nextpnr place & route
+*.asc
+
+# icestorm
+*.bin
+*.rpt
+
+# Timing / analysis
+*.tmg
+*.sdf
+
+# Icarus Verilog / simulation
+*.vvp
+*.out
+*.vcd
+*.fst
+*.ghw
+
+# Yosys logs / scratch
+*.log
+yosys.log
+abc.history
+
+# Build output dir (if you use one)
+build/
+out/
+
+# Editor / OS
+*.swp
+*~
+.DS_Store
