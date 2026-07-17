@@ -15,7 +15,7 @@
           nextpnr    # place & route (ice40)
           icestorm   # icepack / icetime / iceprog
           iverilog   # simulation
-          gtkwave    # waveform viewer
+          surfer     # waveform viewer
           verible    # editor LSP / format / lint
           digital    # digital logic designer and circuit simulator
         ];
