@@ -1,11 +1,11 @@
 module vga_timing (
     input wire clk,
     input wire reset,
-    output reg[3:0] R,
-    output reg[3:0] G,
-    output reg[3:0] B,
-    output reg HS = 1'b1,
-    output reg VS = 1'b1
+    output wire HS,
+    output wire VS,
+    output wire dataEnable,
+    output reg[9:0] x,
+    output reg[9:0] y
 );
 
     localparam HTOTAL = 800;
@@ -22,53 +22,15 @@ module vga_timing (
     localparam VSYNC = 2;
     localparam VBPORCH = 25;
 
-    reg[10:0] x = 0;
-    reg[10:0] y = 0;
-    wire dataEnable;
-
     assign dataEnable = (x < HACTIVE) && (y < VACTIVE);
+    assign HS = !(x >= HTOTAL-HSYNC-HBPORCH && x < HTOTAL-HBPORCH);
+    assign VS = !(y >= VTOTAL-VSYNC-VBPORCH && y < VTOTAL-VBPORCH);
 
     always @(posedge clk) begin
         if(reset) begin
-            x = 0;
-            y = 0;
-            HS <= 1'b1;
-            VS <= 1'b1;
+            x <= 0;
+            y <= 0;
         end else begin
-        if(dataEnable) begin
-                if(x < 320) begin
-                    if(y < 240) begin
-                        R <= 4'b1111;
-                        G <= 4'b0000;
-                        B <= 4'b0000;
-                    end else begin
-                        R <= 4'b0000;
-                        G <= 4'b1111;
-                        B <= 4'b0000;
-                    end
-                end else begin
-                    if(y < 240) begin
-                        R <= 4'b0000;
-                        G <= 4'b0000;
-                        B <= 4'b1111;
-                    end else begin
-                        R <= 4'b0000;
-                        G <= 4'b1111;
-                        B <= 4'b1111;
-                    end
-                end
-            end else begin
-                        R <= 4'b0000;
-                        G <= 4'b0000;
-                        B <= 4'b0000;
-            end
-
-            if(x >= HTOTAL-HSYNC-HBPORCH && x < HTOTAL-HBPORCH) HS <= 0;
-            else HS <= 1;
-
-            if(y >= VTOTAL-VSYNC-VBPORCH && y < VTOTAL-VBPORCH) VS <= 0;
-            else VS <= 1;
-
             if(x == HTOTAL-1) begin
                 x <= 0;
                 if(y == VTOTAL-1) begin

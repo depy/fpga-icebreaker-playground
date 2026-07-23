@@ -2,7 +2,7 @@ PROJ    = top
 PIN_DEF = icebreaker.pcf
 DEVICE  = up5k
 PACKAGE = sg48
-SRC = top.v vga_timing.v pll.v
+SRC = top.v pixel_gen.v vga_timing.v pll.v
 TB = vga_timing
 
 all: $(PROJ).bin
