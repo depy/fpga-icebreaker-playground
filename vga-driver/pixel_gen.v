@@ -1,3 +1,5 @@
+`timescale 1ns / 1ps
+
 module pixel_gen (
     input wire clk,
     input wire reset,
@@ -6,7 +8,7 @@ module pixel_gen (
     input wire[9:0] y,
     output reg[3:0] R,
     output reg[3:0] G,
-    output reg[3:0] B,
+    output reg[3:0] B
 );
 
     always @(posedge clk) begin

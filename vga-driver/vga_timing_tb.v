@@ -3,19 +3,20 @@
 module vga_timing_test;
     reg clk = 0;
     reg reset = 1;
-    wire[3:0] R;
-    wire[3:0] G;
-    wire[3:0] B;
+    wire[9:0] x;
+    wire[9:0] y;
+    wire dataEnable;
     wire HS;
     wire VS;
 
     vga_timing uut(
         .clk(clk),
-        .R(R),
-        .G(G),
-        .B(B),
+        .reset(reset),
         .HS(HS),
-        .VS(VS)
+        .VS(VS),
+        .dataEnable(dataEnable),
+        .x(x),
+        .y(y)
     );
 
     always #20 clk = ~clk;

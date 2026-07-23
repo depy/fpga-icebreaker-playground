@@ -4,8 +4,14 @@ DEVICE  = up5k
 PACKAGE = sg48
 SRC = top.v pixel_gen.v vga_timing.v pll.v
 TB = vga_timing
+CELLS = $(shell yosys-config --datdir)/ice40/cells_sim.v
 
 all: $(PROJ).bin
+
+# Linting
+lint: verilator.vlt $(SRC)
+	verilator --lint-only -Wall --top-module top verilator.vlt $(SRC) $(CELLS)
+	iverilog -Wall -g2012 -o /dev/null -s top $(SRC) $(CELLS)
 
 # Synthesis
 $(PROJ).json: $(SRC)
@@ -38,4 +44,4 @@ clean:
 	rm -f $(PROJ).json $(PROJ).asc $(PROJ).bin $(PROJ).rpt \
 		*.vvp *.fst *.vcd
 
-.PHONY: all prog time sim clean
+.PHONY: all prog time sim lint clean

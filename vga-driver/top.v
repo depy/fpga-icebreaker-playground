@@ -1,3 +1,5 @@
+`timescale 1ns / 1ps
+
 module top (
     input wire clk,
     output wire[3:0] R,
@@ -10,7 +12,7 @@ module top (
     wire pllClk;
     wire pllLocked;
 
-    reg[1:0] resetSync = 2'b11;
+    reg[1:0] resetSync;
     wire reset = resetSync[1];
 
     reg[9:0] x;
@@ -49,7 +51,7 @@ module top (
         .y(y),
         .R(R),
         .G(G),
-        .B(B),
+        .B(B)
     );
 endmodule
 
