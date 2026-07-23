@@ -26,7 +26,7 @@ module top (
             resetSync <= {resetSync[0], 1'b0};
     end
 
-    vga vga_instance(
+    vga_timing vga_timing_instance(
         .clk(pllClk),
         .reset(reset),
         .R(R),

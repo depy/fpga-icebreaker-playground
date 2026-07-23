@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module vga_test;
+module vga_timing_test;
     reg clk = 0;
     reg reset = 1;
     wire[3:0] R;
@@ -9,7 +9,7 @@ module vga_test;
     wire HS;
     wire VS;
 
-    vga uut(
+    vga_timing uut(
         .clk(clk),
         .R(R),
         .G(G),
@@ -21,8 +21,8 @@ module vga_test;
     always #20 clk = ~clk;
 
     initial begin
-        $dumpfile("vga_tb.fst");
-        $dumpvars(0, vga_test);
+        $dumpfile("vga_timing_tb.fst");
+        $dumpvars(0, vga_timing_test);
     end
 
     initial begin

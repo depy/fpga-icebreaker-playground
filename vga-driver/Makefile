@@ -2,7 +2,8 @@ PROJ    = top
 PIN_DEF = icebreaker.pcf
 DEVICE  = up5k
 PACKAGE = sg48
-SRC = top.v vga.v pll.v
+SRC = top.v vga_timing.v pll.v
+TB = vga_timing
 
 all: $(PROJ).bin
 
@@ -28,13 +29,13 @@ time: $(PROJ).asc
 	icetime -d $(DEVICE) -mtr $(PROJ).rpt $<
 
 # Simulation
-sim: vga_tb.v vga.v
-	iverilog -o vga_tb vga_tb.v vga.v
-	vvp vga_tb -fst
-	surfer vga_tb.fst
+sim: $(TB)_tb.v $(TB).v
+	iverilog -o $(TB)_tb.vvp $(TB)_tb.v $(TB).v
+	vvp $(TB)_tb.vvp -fst
+	surfer $(TB)_tb.fst
 
 clean:
 	rm -f $(PROJ).json $(PROJ).asc $(PROJ).bin $(PROJ).rpt \
-		$(PROJ)_tb $(PROJ).fst
+		*.vvp *.fst *.vcd
 
 .PHONY: all prog time sim clean

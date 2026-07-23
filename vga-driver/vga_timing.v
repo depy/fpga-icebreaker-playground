@@ -1,4 +1,4 @@
-module vga (
+module vga_timing (
     input wire clk,
     input wire reset,
     output reg[3:0] R,
@@ -22,22 +22,22 @@ module vga (
     localparam VSYNC = 2;
     localparam VBPORCH = 25;
 
-    reg[10:0] hCounter = 0;
-    reg[10:0] vCounter = 0;
+    reg[10:0] x = 0;
+    reg[10:0] y = 0;
     wire dataEnable;
 
-    assign dataEnable = (hCounter < HACTIVE) && (vCounter < VACTIVE);
+    assign dataEnable = (x < HACTIVE) && (y < VACTIVE);
 
     always @(posedge clk) begin
         if(reset) begin
-            hCounter = 0;
-            vCounter = 0;
+            x = 0;
+            y = 0;
             HS <= 1'b1;
             VS <= 1'b1;
         end else begin
         if(dataEnable) begin
-                if(hCounter < 320) begin
-                    if(vCounter < 240) begin
+                if(x < 320) begin
+                    if(y < 240) begin
                         R <= 4'b1111;
                         G <= 4'b0000;
                         B <= 4'b0000;
@@ -47,7 +47,7 @@ module vga (
                         B <= 4'b0000;
                     end
                 end else begin
-                    if(vCounter < 240) begin
+                    if(y < 240) begin
                         R <= 4'b0000;
                         G <= 4'b0000;
                         B <= 4'b1111;
@@ -63,20 +63,20 @@ module vga (
                         B <= 4'b0000;
             end
 
-            if(hCounter >= HTOTAL-HSYNC-HBPORCH && hCounter < HTOTAL-HBPORCH) HS <= 0;
+            if(x >= HTOTAL-HSYNC-HBPORCH && x < HTOTAL-HBPORCH) HS <= 0;
             else HS <= 1;
 
-            if(vCounter >= VTOTAL-VSYNC-VBPORCH && vCounter < VTOTAL-VBPORCH) VS <= 0;
+            if(y >= VTOTAL-VSYNC-VBPORCH && y < VTOTAL-VBPORCH) VS <= 0;
             else VS <= 1;
 
-            if(hCounter == HTOTAL-1) begin
-                hCounter <= 0;
-                if(vCounter == VTOTAL-1) begin
-                    vCounter <= 0;
+            if(x == HTOTAL-1) begin
+                x <= 0;
+                if(y == VTOTAL-1) begin
+                    y <= 0;
                 end else begin
-                    vCounter <= vCounter + 1;
+                    y <= y + 1;
                 end
-            end else hCounter <= hCounter + 1;
+            end else x <= x + 1;
         end
     end
 endmodule
