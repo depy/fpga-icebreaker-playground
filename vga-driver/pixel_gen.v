@@ -48,7 +48,13 @@ module pixel_gen (
         smiley[31] = 32'b00000000000000000000000000000000;
     end
 
-    wire pixel = smiley[y[4:0]][5'd31 - x[4:0]];
+    localparam[9:0] sprite_x = 10'd320; 
+    localparam[9:0] sprite_y = 10'd240; 
+    wire[4:0] lx = x - sprite_x;
+    wire[4:0] ly = y - sprite_y;
+    wire in_box = (x >= sprite_x && x < sprite_x + 32) && (y >= sprite_y && y < sprite_y + 32);
+
+    wire pixel = in_box && smiley[ly][5'd31 - lx];
 
     always @(posedge clk) begin
         if(reset || !dataEnable) begin
