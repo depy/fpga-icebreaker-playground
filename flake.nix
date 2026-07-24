@@ -17,6 +17,7 @@
           iverilog   # simulation
           surfer     # waveform viewer
           verible    # editor LSP / format / lint
+          verilator  # simulator / linter
           digital    # digital logic designer and circuit simulator
         ];
       };

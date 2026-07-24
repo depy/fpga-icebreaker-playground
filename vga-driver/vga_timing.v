@@ -12,13 +12,13 @@ module vga_timing (
 
     localparam HTOTAL = 800;
     localparam HACTIVE = 640;
-    localparam HFPORCH = 8;
+    localparam HFPORCH = 16;
     localparam HSYNC = 96;
     // localparam HBPORCH = 48;
 
     localparam VTOTAL = 525;
     localparam VACTIVE = 480;
-    localparam VFPORCH = 2;
+    localparam VFPORCH = 10;
     localparam VSYNC = 2;
     // localparam VBPORCH = 25;
 
